@@ -5,7 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.company.autocontrol.ui.screens.HomeScreen
+import com.company.autocontrol.ui.screens.home.HomeScreen
 
 @Composable
 fun App() {

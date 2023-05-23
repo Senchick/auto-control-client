@@ -1,4 +1,4 @@
-package com.company.autocontrol.ui.screens
+package com.company.autocontrol.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,23 +17,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.company.autocontrol.model.RoadSection
+import com.company.autocontrol.ui.BookingItem
+import com.company.autocontrol.ui.viewmodel.BookingViewModel
+import com.company.autocontrol.util.formatDate
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection
 import com.maxkeppeler.sheets.calendar.models.CalendarStyle
-import com.company.autocontrol.ui.BookingItem
-import com.company.autocontrol.ui.viewmodel.BookingViewModel
-import com.company.autocontrol.util.formatDate
 import java.time.LocalDate
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: BookingViewModel = hiltViewModel()) {
-    val calendarState = rememberUseCaseState()
-    var date by remember { mutableStateOf<LocalDate?>(LocalDate.now()) }
     val uiState by viewModel.bookingUiState.collectAsStateWithLifecycle()
+    val calendarState = rememberUseCaseState()
+    val showDialog = remember { mutableStateOf(false) }
+    val selectedRoadSection = remember { mutableStateOf(uiState.roadSections.first()) } // TODO краш, если список будет пуст
+    var date by remember { mutableStateOf<LocalDate?>(LocalDate.now()) }
 
     CalendarDialog(
         state = calendarState,
@@ -71,7 +74,9 @@ fun HomeScreen(viewModel: BookingViewModel = hiltViewModel()) {
                 LocalMinimumInteractiveComponentEnforcement provides false
             ) {
                 Button(
-                    onClick = { },
+                    onClick = {
+                        showDialog.value = true
+                    },
                     modifier = Modifier.padding(start = 8.dp)
                 ) {
                     Icon(
@@ -90,9 +95,12 @@ fun HomeScreen(viewModel: BookingViewModel = hiltViewModel()) {
         }
         Text(
             modifier = Modifier.padding(bottom = 16.dp, top = 12.dp),
-            text = "Выбранная дата: ${date?.formatDate()}",
+            text = "Выбранная дата: ${date?.formatDate()} \n " +
+                    "Выбранный участок дороги: ${selectedRoadSection.value.name}",
             fontSize = 14.sp
         )
+
+        RoadSectionDialog(uiState.roadSections, showDialog, selectedRoadSection)
 
         LazyVerticalGrid(
             columns = GridCells.FixedSize(64.dp),

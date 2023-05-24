@@ -7,6 +7,7 @@ import com.company.autocontrol.model.RoadSection
 import com.company.autocontrol.util.generateDates
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,4 +23,16 @@ class BookingViewModel @Inject constructor() : ViewModel() {
     )
 
     val bookingUiState: StateFlow<BookingUiState> = _bookingUiState
+
+    fun updateSelectedRoadSection(roadSection: RoadSection) {
+        _bookingUiState.update {
+            it.copy(selectedRoadSection = roadSection)
+        }
+    }
+
+    fun updateSelectedDate(localDate: LocalDate) {
+        _bookingUiState.update {
+            it.copy(selectedDate = localDate)
+        }
+    }
 }

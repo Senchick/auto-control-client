@@ -19,7 +19,7 @@ import com.company.autocontrol.model.RoadSection
 fun RoadSectionDialog(
     sections: List<RoadSection>,
     showDialog: MutableState<Boolean>,
-    selectedRoadSection: MutableState<RoadSection>,
+    onSelectedRoadSection: (RoadSection) -> Unit,
 ) {
     if (showDialog.value) {
         AlertDialog(
@@ -34,7 +34,7 @@ fun RoadSectionDialog(
                             fontSize = 18.sp,
                             modifier = Modifier.fillMaxWidth()
                                 .clickable {
-                                    selectedRoadSection.value = item
+                                    onSelectedRoadSection(item)
                                     showDialog.value = false
                                 }
                                 .padding(8.dp)

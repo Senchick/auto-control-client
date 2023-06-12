@@ -1,4 +1,4 @@
-package com.company.autocontrol.model
+package com.company.autocontrol.data.model.booking
 
 enum class BookingType {
     GENERAL, // сколько угодно участников

@@ -1,9 +1,10 @@
 package com.company.autocontrol.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.company.autocontrol.model.Booking
-import com.company.autocontrol.model.BookingType
-import com.company.autocontrol.model.RoadSection
+import com.company.autocontrol.data.model.booking.Booking
+import com.company.autocontrol.data.model.booking.BookingType
+import com.company.autocontrol.data.model.booking.RoadSection
+import com.company.autocontrol.ui.state.BookingUiState
 import com.company.autocontrol.util.generateDates
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

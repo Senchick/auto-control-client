@@ -1,7 +1,7 @@
-package com.company.autocontrol.ui.viewmodel
+package com.company.autocontrol.ui.state
 
-import com.company.autocontrol.model.Booking
-import com.company.autocontrol.model.RoadSection
+import com.company.autocontrol.data.model.booking.Booking
+import com.company.autocontrol.data.model.booking.RoadSection
 import java.time.LocalDate
 
 data class BookingUiState(

@@ -1,8 +1,8 @@
 package com.company.autocontrol.ui.screens.home
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,9 +11,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.company.autocontrol.model.RoadSection
+import com.company.autocontrol.data.model.booking.RoadSection
 
 @Composable
 fun RoadSectionDialog(
@@ -23,7 +24,7 @@ fun RoadSectionDialog(
 ) {
     if (showDialog.value) {
         AlertDialog(
-            modifier = Modifier.fillMaxHeight(0.85f),
+            modifier = Modifier.heightIn(0.dp, (0.85f * LocalConfiguration.current.screenHeightDp).dp),
             onDismissRequest = { showDialog.value = false },
             title = { Text("Выберите участок дороги") },
             text = {

@@ -1,4 +1,4 @@
-package com.company.autocontrol.model
+package com.company.autocontrol.data.model.booking
 
 import androidx.annotation.Size
 
@@ -9,4 +9,4 @@ data class Booking(
     val comment: String = "",
     val author: String = "",
 
-)
+    )

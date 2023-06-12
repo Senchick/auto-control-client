@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.company.autocontrol.data.model.booking.Booking
 import com.company.autocontrol.ui.BookingItem
 import com.company.autocontrol.ui.viewmodel.BookingViewModel
 import com.company.autocontrol.util.formatDate
@@ -32,7 +33,9 @@ import java.util.*
 fun HomeScreen(viewModel: BookingViewModel = hiltViewModel()) {
     val uiState by viewModel.bookingUiState.collectAsStateWithLifecycle()
     val calendarState = rememberUseCaseState()
-    val showDialog = remember { mutableStateOf(false) }
+    val showRoadSectionDialog = remember { mutableStateOf(false) }
+    val showOverviewDialog = remember { mutableStateOf(false) }
+    val bookingOverviewDialog = remember { mutableStateOf<Booking?>(null) }
 
     CalendarDialog(
         state = calendarState,
@@ -71,7 +74,7 @@ fun HomeScreen(viewModel: BookingViewModel = hiltViewModel()) {
             ) {
                 Button(
                     onClick = {
-                        showDialog.value = true
+                        showRoadSectionDialog.value = true
                     },
                     modifier = Modifier.padding(start = 8.dp)
                 ) {
@@ -96,16 +99,23 @@ fun HomeScreen(viewModel: BookingViewModel = hiltViewModel()) {
             fontSize = 14.sp
         )
 
-        RoadSectionDialog(uiState.roadSections, showDialog) {
+        RoadSectionDialog(uiState.roadSections, showRoadSectionDialog) {
             viewModel.updateSelectedRoadSection(it)
         }
 
+        if (bookingOverviewDialog.value != null) {
+            BookingOverviewDialog(bookingOverviewDialog, showOverviewDialog)
+        }
         LazyVerticalGrid(
             columns = GridCells.FixedSize(64.dp),
             horizontalArrangement = Arrangement.Center
         ) {
             items(uiState.bookings) { booking ->
-                BookingItem(booking)
+
+                BookingItem(booking) {
+                    showOverviewDialog.value = true
+                    bookingOverviewDialog.value = booking
+                }
             }
         }
     }

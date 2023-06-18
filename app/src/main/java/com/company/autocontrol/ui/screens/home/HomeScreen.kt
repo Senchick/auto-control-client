@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.company.autocontrol.data.model.booking.Booking
 import com.company.autocontrol.ui.BookingItem
-import com.company.autocontrol.ui.viewmodel.BookingViewModel
+import com.company.autocontrol.ui.viewmodel.HomeViewModel
 import com.company.autocontrol.util.formatDate
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
@@ -30,7 +30,7 @@ import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: BookingViewModel = hiltViewModel()) {
+fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val uiState by viewModel.bookingUiState.collectAsStateWithLifecycle()
     val calendarState = rememberUseCaseState()
     val showRoadSectionDialog = remember { mutableStateOf(false) }

@@ -12,7 +12,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
-class BookingViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor() : ViewModel() {
 
     private val _bookingUiState = MutableStateFlow(
         BookingUiState(

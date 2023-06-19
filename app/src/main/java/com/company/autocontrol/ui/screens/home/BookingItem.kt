@@ -1,4 +1,4 @@
-package com.company.autocontrol.ui
+package com.company.autocontrol.ui.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

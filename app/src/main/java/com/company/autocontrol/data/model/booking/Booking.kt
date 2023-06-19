@@ -8,5 +8,7 @@ data class Booking(
     val time: String,
     val comment: String = "",
     val author: String = "",
-
-    )
+    val bookingStatus: BookingStatus = BookingStatus.IDLE,
+    val department: String = ""
+) {
+}

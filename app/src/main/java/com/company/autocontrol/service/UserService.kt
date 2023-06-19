@@ -1,4 +1,4 @@
-package com.company.autocontrol.data.service
+package com.company.autocontrol.service
 
 import com.company.autocontrol.data.model.user.User
 import retrofit2.http.GET

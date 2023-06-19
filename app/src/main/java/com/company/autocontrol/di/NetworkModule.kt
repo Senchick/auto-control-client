@@ -1,7 +1,7 @@
 package com.company.autocontrol.di
 
 import com.company.autocontrol.BuildConfig
-import com.company.autocontrol.data.service.UserService
+import com.company.autocontrol.service.UserService
 import com.company.autocontrol.di.interceptor.AuthInterceptor
 import com.company.autocontrol.di.interceptor.ErrorInterceptor
 import com.google.gson.Gson

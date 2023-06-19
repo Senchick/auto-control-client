@@ -13,8 +13,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.company.autocontrol.model.Booking
-import com.company.autocontrol.model.BookingType
+import com.company.autocontrol.data.model.booking.Booking
+import com.company.autocontrol.data.model.booking.BookingType
 import com.company.autocontrol.ui.theme.green
 import com.company.autocontrol.ui.theme.red
 import com.company.autocontrol.ui.theme.blue

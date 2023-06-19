@@ -5,7 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.company.autocontrol.ui.screens.HomeScreen
+import androidx.navigation.compose.rememberNavController
+import com.company.autocontrol.ui.navigation.AutoControlNavHost
 
 @Composable
 fun App() {
@@ -13,6 +14,8 @@ fun App() {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        HomeScreen()
+        val navController = rememberNavController()
+
+        AutoControlNavHost(navController)
     }
 }

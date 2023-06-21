@@ -24,13 +24,13 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "String", "API_URL", "\"https://127.0.0.1:8080/\""
+            buildConfigField "String", "API_URL", "\"http://10.0.2.2:8080/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
-            buildConfigField "String", "API_URL", "\"https://127.0.0.1:8080/\""
+            buildConfigField "String", "API_URL", "\"http://10.0.2.2:8080/\""
 
         }
     }
@@ -89,6 +89,7 @@ dependencies {
     // compose
     implementation 'com.maxkeppeler.sheets-compose-dialogs:core:1.1.1'
     implementation 'com.maxkeppeler.sheets-compose-dialogs:calendar:1.1.1'
+    implementation 'com.maxkeppeler.sheets-compose-dialogs:clock:1.1.1'
     implementation "androidx.navigation:navigation-compose:2.6.0"
     implementation 'androidx.activity:activity-compose:1.7.2'
     implementation "androidx.compose.ui:ui:1.4.3"

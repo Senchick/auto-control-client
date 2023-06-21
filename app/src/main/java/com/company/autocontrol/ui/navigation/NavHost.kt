@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.company.autocontrol.ui.screens.admin.AdminScreen
 import com.company.autocontrol.ui.screens.home.HomeScreen
 import com.company.autocontrol.ui.screens.login.LoginScreen
 import com.company.autocontrol.ui.screens.splash.SplashScreen
@@ -16,6 +17,7 @@ fun AutoControlNavHost(navController: NavHostController) {
     ) {
         composable(NavScreen.Splash.route) { SplashScreen(navController) }
         composable(NavScreen.Login.route) { LoginScreen(navController) }
-        composable(NavScreen.Home.route) { HomeScreen() }
+        composable(NavScreen.Home.route) { HomeScreen(navController) }
+        composable(NavScreen.Admin.route) { AdminScreen(navController) }
     }
 }

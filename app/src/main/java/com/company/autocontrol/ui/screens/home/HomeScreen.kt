@@ -17,9 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.company.autocontrol.data.model.booking.Booking
+import androidx.navigation.NavController
+import com.company.autocontrol.data.model.booking.BookingOverview
+import com.company.autocontrol.data.model.booking.asBookingSlots
+import com.company.autocontrol.ui.state.HomeState
 import com.company.autocontrol.ui.viewmodel.HomeViewModel
 import com.company.autocontrol.util.formatDate
+import com.maxkeppeker.sheets.core.models.base.UseCaseState
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
@@ -29,17 +33,45 @@ import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
-    val uiState by viewModel.bookingUiState.collectAsStateWithLifecycle()
+fun HomeScreen(
+    navController: NavController,
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.homeState.collectAsStateWithLifecycle()
     val calendarState = rememberUseCaseState()
     val showRoadSectionDialog = remember { mutableStateOf(false) }
     val showOverviewDialog = remember { mutableStateOf(false) }
-    val bookingOverviewDialog = remember { mutableStateOf<Booking?>(null) }
+    val bookingOverviewDialog = remember { mutableStateOf<BookingOverview?>(null) }
 
+    when (uiState) {
+        HomeState.Idle -> Text("IDLE")
+        HomeState.Loading -> Text("Loading")
+        is HomeState.Error -> Text("Error: " + (uiState as HomeState.Error).error.toString())
+        is HomeState.Success -> SuccessScreen(
+            calendarState,
+            viewModel,
+            showRoadSectionDialog,
+            uiState as HomeState.Success,
+            bookingOverviewDialog,
+            showOverviewDialog
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SuccessScreen(
+    calendarState: UseCaseState,
+    viewModel: HomeViewModel,
+    showRoadSectionDialog: MutableState<Boolean>,
+    uiState: HomeState.Success,
+    bookingOverviewDialog: MutableState<BookingOverview?>,
+    showOverviewDialog: MutableState<Boolean>
+) {
     CalendarDialog(
         state = calendarState,
         config = CalendarConfig(
-            locale = Locale("ru"),
+            locale = Locale.getDefault(),
             style = CalendarStyle.MONTH,
             yearSelection = true,
             monthSelection = true
@@ -51,12 +83,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
     Column(modifier = Modifier.padding(16.dp)) {
         Row {
-            CompositionLocalProvider(
-                LocalMinimumInteractiveComponentEnforcement provides false
-            ) {
+            CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
                 Button(
                     onClick = { calendarState.show() },
-
                 ) {
                     Icon(
                         Icons.Rounded.DateRange,
@@ -68,9 +97,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 }
             }
 
-            CompositionLocalProvider(
-                LocalMinimumInteractiveComponentEnforcement provides false
-            ) {
+            CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
                 Button(
                     onClick = {
                         showRoadSectionDialog.value = true
@@ -91,6 +118,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 }
             }
         }
+
         Text(
             modifier = Modifier.padding(bottom = 16.dp, top = 12.dp),
             text = "Выбранная дата: ${uiState.selectedDate.formatDate()} \n " +
@@ -109,11 +137,11 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
             columns = GridCells.FixedSize(64.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            items(uiState.bookings) { booking ->
+            items(uiState.bookings.asBookingSlots()) { booking ->
 
                 BookingItem(booking) {
                     showOverviewDialog.value = true
-                    bookingOverviewDialog.value = booking
+                    bookingOverviewDialog.value = null
                 }
             }
         }

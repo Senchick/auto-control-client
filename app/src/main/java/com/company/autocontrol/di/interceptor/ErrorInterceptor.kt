@@ -1,6 +1,7 @@
 package com.company.autocontrol.di.interceptor
 
 import com.company.autocontrol.data.exception.BadRequestErrorException
+import com.company.autocontrol.data.exception.UnauthorizedErrorException
 import com.company.autocontrol.data.exception.UnexpectedErrorException
 import com.company.autocontrol.data.model.error.ErrorResponse
 import com.google.gson.Gson
@@ -19,6 +20,7 @@ class ErrorInterceptor @Inject constructor(private val gson: Gson) : Interceptor
 
             when (response.code) {
                 HttpURLConnection.HTTP_BAD_REQUEST -> throw BadRequestErrorException(errorResponse)
+                HttpURLConnection.HTTP_UNAUTHORIZED -> throw UnauthorizedErrorException(errorResponse)
                 else -> throw UnexpectedErrorException(errorResponse)
             }
         }

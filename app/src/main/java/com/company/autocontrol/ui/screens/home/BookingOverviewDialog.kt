@@ -8,27 +8,37 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.company.autocontrol.R
-import com.company.autocontrol.data.model.booking.Booking
+import com.company.autocontrol.data.model.booking.BookingOverview
+import com.company.autocontrol.data.model.booking.BookingStatus
 import com.company.autocontrol.data.model.booking.BookingType
+import com.company.autocontrol.data.model.user.Role
+import com.company.autocontrol.data.model.user.User
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookingOverviewDialog(
-    booking: MutableState<Booking?>,
+    booking: MutableState<BookingOverview?>,
     showDialog: MutableState<Boolean>
 ) {
     val booking by booking
 
     if (showDialog.value && booking != null) {
+        val formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")
+
         AlertDialog(
             onDismissRequest = { showDialog.value = false },
             title = { Text("Бронь") },
             text = {
                 Column {
-                    Text("Инициатор брони: ${booking!!.author}")
-                    Text("Отдел: ${booking!!.department}")
-                    Text("Время брони: ${booking!!.time}")
                     Text("Тип брони: ${booking!!.bookingType}")
                     Text("Статус брони: ${booking!!.bookingStatus}")
+                    Text("Инициатор брони: ${booking!!.author.firstname} ${booking!!.author.surname}")
+                    Text("Отдел: ${booking!!.author.department}")
+                    Text("Начало брони: ${booking!!.fromInterval.format(formatter)}")
+                    Text("Конец брони: ${booking!!.toInterval.format(formatter)}")
+                    Text("Дата создания брони: ${booking!!.createdDate.format(formatter)}")
+                    Text("Комментарий: ${booking!!.comment}")
                 }
             },
             confirmButton = {
@@ -46,13 +56,22 @@ fun BookingOverviewDialog(
 @Composable
 private fun PreviewDialog() {
     val booking = remember {
-        mutableStateOf<Booking?>(
-            Booking(
+        mutableStateOf<BookingOverview?>(
+            BookingOverview(
                 bookingType = BookingType.NO_BOOKING,
-                time = "13:30",
+                createdDate = LocalDateTime.now(),
                 comment = "comment",
-                author = "author",
-                department = "department"
+                author = User(
+                    firstname = "Ivan",
+                    surname = "Ivanov",
+                    department = "Department",
+                    login = "",
+                    role = Role.USER
+                ),
+                fromInterval = LocalDateTime.now(),
+                toInterval = LocalDateTime.now(),
+                bookingStatus = BookingStatus.IDLE
+
             )
         )
     }

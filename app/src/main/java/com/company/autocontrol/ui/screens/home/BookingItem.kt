@@ -13,15 +13,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.company.autocontrol.data.model.booking.Booking
+import com.company.autocontrol.data.model.booking.BookingSlot
 import com.company.autocontrol.data.model.booking.BookingType
 import com.company.autocontrol.ui.theme.green
 import com.company.autocontrol.ui.theme.red
 import com.company.autocontrol.ui.theme.blue
+import com.company.autocontrol.util.formatTime
 
 @Composable
 fun BookingItem(
-    booking: Booking,
+    booking: BookingSlot,
     onClick: () -> Unit = {}
 ) {
     Box(
@@ -43,7 +44,7 @@ fun BookingItem(
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = booking.time,
+                text = booking.time.formatTime() ?: "???",
                 fontSize = 14.sp,
                 maxLines = 1,
                 textAlign = TextAlign.Center

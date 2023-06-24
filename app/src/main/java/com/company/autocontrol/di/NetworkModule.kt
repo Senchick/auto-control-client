@@ -2,6 +2,8 @@ package com.company.autocontrol.di
 
 import com.company.autocontrol.BuildConfig
 import com.company.autocontrol.data.model.user.Role
+import com.company.autocontrol.data.service.BookingService
+import com.company.autocontrol.data.service.RoadSectionService
 import com.company.autocontrol.data.service.UserService
 import com.company.autocontrol.di.interceptor.AuthInterceptor
 import com.company.autocontrol.di.interceptor.ErrorInterceptor
@@ -17,6 +19,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -81,5 +84,17 @@ object NetworkModule {
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRoadSectionService(retrofit: Retrofit): RoadSectionService {
+        return retrofit.create(RoadSectionService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideBookingService(retrofit: Retrofit): BookingService {
+        return retrofit.create(BookingService::class.java)
     }
 }

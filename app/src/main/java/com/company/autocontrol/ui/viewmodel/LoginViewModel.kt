@@ -2,7 +2,7 @@ package com.company.autocontrol.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.company.autocontrol.data.exception.UnauthorizedErrorException
+import com.company.autocontrol.data.exception.network.UnauthorizedErrorException
 import com.company.autocontrol.data.model.user.UserLogin
 import com.company.autocontrol.data.repository.UserRepository
 import com.company.autocontrol.ui.state.LoginState

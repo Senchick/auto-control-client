@@ -1,9 +1,9 @@
 package com.company.autocontrol.data.util
 
-import com.company.autocontrol.data.exception.BadRequestErrorException
-import com.company.autocontrol.data.exception.ErrorException
-import com.company.autocontrol.data.exception.UnauthorizedErrorException
-import com.company.autocontrol.data.exception.UnexpectedErrorException
+import com.company.autocontrol.data.exception.network.BadRequestErrorException
+import com.company.autocontrol.data.exception.network.ErrorException
+import com.company.autocontrol.data.exception.network.UnauthorizedErrorException
+import com.company.autocontrol.data.exception.network.UnexpectedErrorException
 import com.company.autocontrol.data.model.api.Response
 import com.company.autocontrol.data.model.error.ErrorResponse
 import com.google.gson.Gson

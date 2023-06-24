@@ -1,4 +1,4 @@
-package com.company.autocontrol.di.interceptor
+package com.company.autocontrol.data.di.interceptor
 
 import com.company.autocontrol.data.repository.UserRepository
 import okhttp3.Credentials

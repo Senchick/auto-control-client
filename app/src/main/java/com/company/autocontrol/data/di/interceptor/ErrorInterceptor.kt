@@ -1,8 +1,8 @@
-package com.company.autocontrol.di.interceptor
+package com.company.autocontrol.data.di.interceptor
 
-import com.company.autocontrol.data.exception.BadRequestErrorException
-import com.company.autocontrol.data.exception.UnauthorizedErrorException
-import com.company.autocontrol.data.exception.UnexpectedErrorException
+import com.company.autocontrol.data.exception.network.BadRequestErrorException
+import com.company.autocontrol.data.exception.network.UnauthorizedErrorException
+import com.company.autocontrol.data.exception.network.UnexpectedErrorException
 import com.company.autocontrol.data.model.error.ErrorResponse
 import com.google.gson.Gson
 import okhttp3.Interceptor

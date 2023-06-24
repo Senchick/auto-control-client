@@ -1,4 +1,4 @@
-package com.company.autocontrol.di
+package com.company.autocontrol.data.di
 
 import android.content.Context
 import android.content.SharedPreferences

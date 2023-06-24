@@ -1,6 +1,7 @@
 package com.company.autocontrol.util
 
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -19,7 +20,7 @@ fun generateTimes(): Array<LocalTime> {
     return m
 }
 
-fun LocalDate.formatDate(): String? {
+fun LocalDateTime.formatDate(): String? {
     val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
     return format(formatter)

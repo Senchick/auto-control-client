@@ -1,6 +1,7 @@
 package com.company.autocontrol.data.repository
 
 import android.content.SharedPreferences
+import com.company.autocontrol.data.model.user.Role
 import com.company.autocontrol.data.model.user.User
 import com.company.autocontrol.data.model.user.UserLogin
 import com.company.autocontrol.data.service.UserService
@@ -32,10 +33,18 @@ class UserRepository @Inject constructor(
         return userService.get().getInfo().awaitResponseWithExceptionThrowing()!!
     }
 
+    fun getRole(): Role? {
+        if (!sharedPreferences.contains("role")) {
+            return null
+        }
+
+        return Role.values().find { it.ordinal == sharedPreferences.getInt("role", 0) }
+    }
+
     suspend fun fetchUser(userLogin: UserLogin) {
         saveUser(userLogin) // сохраняем пользователя, чтобы перехватчик использовать креды для авторизации
         val user = getInfo() // запрашиваем информацию о пользователе, чтобы проверить верны ли креды
-        println(user)
+
         sharedPreferences.edit()
             .putInt("role", user.role.ordinal)
             .apply()

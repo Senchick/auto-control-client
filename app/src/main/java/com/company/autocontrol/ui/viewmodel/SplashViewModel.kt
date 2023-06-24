@@ -2,8 +2,8 @@ package com.company.autocontrol.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.company.autocontrol.data.exception.UnauthorizedErrorException
-import com.company.autocontrol.data.exception.UnexpectedErrorException
+import com.company.autocontrol.data.exception.network.UnauthorizedErrorException
+import com.company.autocontrol.data.exception.network.UnexpectedErrorException
 import com.company.autocontrol.data.repository.UserRepository
 import com.company.autocontrol.ui.navigation.NavScreen
 import com.company.autocontrol.ui.state.SplashState

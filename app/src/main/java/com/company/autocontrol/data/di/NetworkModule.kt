@@ -1,10 +1,14 @@
-package com.company.autocontrol.di
+package com.company.autocontrol.data.di
 
 import com.company.autocontrol.BuildConfig
 import com.company.autocontrol.data.model.user.Role
+import com.company.autocontrol.data.service.BookingService
+import com.company.autocontrol.data.service.RoadSectionService
 import com.company.autocontrol.data.service.UserService
-import com.company.autocontrol.di.interceptor.AuthInterceptor
-import com.company.autocontrol.di.interceptor.ErrorInterceptor
+import com.company.autocontrol.data.di.interceptor.AuthInterceptor
+import com.company.autocontrol.data.di.interceptor.ErrorInterceptor
+import com.company.autocontrol.data.model.booking.BookingStatus
+import com.company.autocontrol.data.model.booking.BookingType
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
@@ -17,6 +21,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -55,6 +60,18 @@ object NetworkModule {
                     Role.values().find { it.ordinal == json.asJsonPrimitive.asInt }
                 }
             )
+            .registerTypeAdapter(
+                BookingStatus::class.java,
+                JsonDeserializer { json, _, _ ->
+                    BookingStatus.values().find { it.ordinal == json.asJsonPrimitive.asInt }
+                }
+            )
+            .registerTypeAdapter(
+                BookingType::class.java,
+                JsonDeserializer { json, _, _ ->
+                    BookingType.values().find { it.ordinal == json.asJsonPrimitive.asInt }
+                }
+            )
             .create()
     }
 
@@ -81,5 +98,17 @@ object NetworkModule {
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRoadSectionService(retrofit: Retrofit): RoadSectionService {
+        return retrofit.create(RoadSectionService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideBookingService(retrofit: Retrofit): BookingService {
+        return retrofit.create(BookingService::class.java)
     }
 }

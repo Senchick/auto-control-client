@@ -5,6 +5,7 @@ import com.company.autocontrol.util.generateTimes
 import java.time.LocalDateTime
 
 data class Booking(
+    val id: Long,
     val author: User,
     val bookingType: BookingType,
     val from: LocalDateTime,
@@ -26,12 +27,13 @@ data class BookingDto(
 )
 
 data class BookingDialog(
-    var date: LocalDateTime? = null,
-    var from: LocalDateTime? = null,
-    var to: LocalDateTime? = null,
-    var roadSectionId: Long? = null,
-    var bookingType: BookingType? = null,
-    var comment: String? = null
+    val date: LocalDateTime? = null,
+    val from: LocalDateTime? = null,
+    val to: LocalDateTime? = null,
+    val roadSectionId: Long? = null,
+    val bookingType: BookingType? = null,
+    val comment: String? = null,
+    val bookingStatus: BookingStatus? = null
 )
 
 fun List<Booking>.asBookingSlots(selectedRoadSection: RoadSection, selectedDate: LocalDateTime): List<BookingSlot> {
@@ -43,10 +45,9 @@ fun List<Booking>.asBookingSlots(selectedRoadSection: RoadSection, selectedDate:
             val bookingStartTime = booking.from.toLocalTime()
             val bookingEndTime = booking.to.toLocalTime()
 
-            (time.isAfter(bookingStartTime) || time == bookingStartTime) && (
-                time.plusMinutes(30).isBefore(
+            time.isAfter(bookingStartTime) &&
+                time.isBefore(
                     bookingEndTime
-                ) || time.plusMinutes(30).equals(bookingEndTime)
                 )
         }
 

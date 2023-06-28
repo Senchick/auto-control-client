@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.company.autocontrol.data.exception.RoadSectionNotFoundException
 import com.company.autocontrol.data.exception.RoleNotFoundException
 import com.company.autocontrol.data.model.booking.Booking
+import com.company.autocontrol.data.model.booking.BookingDialog
 import com.company.autocontrol.data.model.booking.BookingDto
 import com.company.autocontrol.data.model.booking.RoadSection
 import com.company.autocontrol.data.repository.BookingRepository
@@ -76,8 +77,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _homeState.emit(HomeState.Loading)
 
-            // TODO config
-
             try {
                 val roadSections = roadSectionRepository.getAll()
                 val roadSection = roadSections.firstOrNull() ?: throw RoadSectionNotFoundException()
@@ -104,7 +103,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun addBooking(booking: Booking) {
+    fun addBooking(booking: BookingDialog) {
         viewModelScope.launch {
             val value = _homeState.value
             if (value is HomeState.Success) {
@@ -113,12 +112,12 @@ class HomeViewModel @Inject constructor(
                 bookingRepository.addBooking(
                     booking.let {
                         BookingDto(
-                            date = it.date,
-                            from = it.from,
-                            to = it.to,
-                            roadSectionId = it.roadSectionId,
-                            bookingType = it.bookingType,
-                            comment = it.comment
+                            date = it.date!!,
+                            from = it.from!!,
+                            to = it.to!!,
+                            roadSectionId = it.roadSectionId!!,
+                            bookingType = it.bookingType!!,
+                            comment = it.comment!!
                         )
                     }
                 )

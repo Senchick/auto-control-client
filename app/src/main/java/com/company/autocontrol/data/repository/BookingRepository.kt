@@ -13,6 +13,14 @@ class BookingRepository @Inject constructor(private val bookingService: Provider
         return bookingService.get().getAll(date, roadSectionId).awaitResponseWithExceptionThrowing()!!
     }
     suspend fun addBooking(bookingDto: BookingDto): Long {
-        return bookingService.get().add(bookingDto).awaitResponseWithExceptionThrowing()!!
+        return bookingService.get().add(bookingDto).awaitResponseWithExceptionThrowing()!!.id
+    }
+
+    suspend fun approve(id: Long) {
+        bookingService.get().approveBooking(id).awaitResponseWithExceptionThrowing()
+    }
+
+    suspend fun disapprove(id: Long) {
+        bookingService.get().disapproveBooking(id).awaitResponseWithExceptionThrowing()
     }
 }

@@ -20,7 +20,7 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
     val state: StateFlow<LoginState> get() = _state
 
     fun login(login: String, password: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             _state.emit(LoginState.Loading)
             try {
                 userRepository.fetchUser(UserLogin(login, password))
